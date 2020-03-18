@@ -1,0 +1,1204 @@
+000100***************************************************************** 00010021
+000200*                                                               * 00020021
+000300*      EEE  M   M   22   K  K       AA    AA                    * 00030021
+000400*      E    MM MM  2  2  K K       A  A  A  A                   * 00040021
+000500*      EE   M M M    2   KK    ==  AAAA  AAAA                   * 00050021
+000600*      E    M   M   2    K K       A  A  A  A                   * 00060021
+000700*      EEE  M   M  2222  K  K      A  A  A  A                   * 00070021
+000800*                                                               * 00080021
+000900*                                                               * 00090021
+001000*      E M 2 K  -   A P P L   A R C H                           * 00100021
+001100*                                                               * 00110021
+001200***************************************************************** 00120021
+001300                                                                  00130021
+001400 ID DIVISION.                                                     00140021
+001500 PROGRAM-ID.    B00EX020.                                         00150021
+001600 AUTHOR.        BRIAN HANLINE                                     00160021
+001700 DATE-WRITTEN.  SEPTEMBER 1997                                    00170021
+001800 DATE-COMPILED.                                                   00180021
+001900                                                                  00190021
+002000***************************************************************** 00200021
+002100*                                                               * 00210021
+002200*     PROGRAM TITLE:  EX_AA_BUILD_INSTANCE_ID                   * 00220021
+002300*                                                               * 00230021
+002400*     ANALYST:        BRIAN HANLINE                             * 00240021
+002500*                                                               * 00250021
+002600*     CORP USAGE:     EMERY WORLDWIDE                           * 00260021
+002700*                                                               * 00270021
+002800*     PROGRAM OVERVIEW:                                         * 00280021
+002900*                                                               * 00290021
+003000*        THIS PROGRAM BUILD INSTANCE IDS FOR ENTITY TYPES USED  * 00300021
+003100*     WITHING VARIOUS EMERY APPLICATIONS.                       * 00310021
+003200*                                                               * 00320021
+003300***************************************************************** 00330021
+003400/                                                                 00340021
+003500***************************************************************** 00350021
+003600*                                                               * 00360021
+003700*     MAINTENANCE HISTORY                                       * 00370021
+003800*                                                               * 00380021
+003900*     MRF/RAF  DATE    INT  LVL  COMMENTS                       * 00390021
+004000*     ------- -------- ---  ---  ------------------------------ * 00400021
+004100*     G60963  09/05/97 BDH  001  NEW PROGRAM.                   * 00410021
+004200*     UBNSN91 03/17/99 GAS  001  INCREASE SEQUENCE NUMBER       * 00420021
+004300*     G60029  11/05/99 JDT  003  Y2K BUG FIX.                   * 00430021
+004400*                                                               * 00440021
+004500***************************************************************** 00450021
+004600/                                                                 00460021
+004700***************************************************************** 00470021
+004800*                                                               * 00480021
+004900*     ABEND CODES        EXPLANATION                            * 00490021
+005000*     -----------        -------------------------------------- * 00500021
+005100*     IC01...............HANDLE ERROR FAILED                    * 00510021
+005200*     IC02...............GET TIME     FAILED                    * 00520021
+005300*     IC03...............FORMATTIME   FAILED                    * 00530021
+005400*                                                               * 00540021
+005500***************************************************************** 00550021
+005600                                                                  00560021
+005700 ENVIRONMENT DIVISION.                                            00570021
+005800 DATA DIVISION.                                                   00580021
+005900/                                                                 00590021
+006000***************************************************************** 00600021
+006100*                                                               * 00610021
+006200*    WORKING STORAGE SECTION                                    * 00620021
+006300*                                                               * 00630021
+006400***************************************************************** 00640021
+006500                                                                  00650021
+006600 WORKING-STORAGE SECTION.                                         00660021
+006700                                                                  00670021
+006800 77  PAN-VALET           PIC X(24) VALUE '001B00EX020  09/30/97'. 00680021
+006900 01  WORKING-STRG-START  PIC X(16) VALUE 'B 0 0 E X 0 2 0 '.      00690021
+007000                                                                  00700021
+007100/                                                                 00710021
+007200***************************************************************** 00720021
+007300*                                                               * 00730021
+007400*    INDICATORS                                                 * 00740021
+007500*                                                               * 00750021
+007600***************************************************************** 00760021
+007700                                                                  00770021
+007800 01  INDICATORS.                                                  00780021
+007900                                                                  00790021
+008000     05  WK-ABEND-CODE                  PIC  X(04) VALUE 'DUMP'.  00800021
+008100         88  ABEND-IC01                            VALUE 'IC01'.  00810021
+008200         88  ABEND-IC02                            VALUE 'IC02'.  00820021
+008300         88  ABEND-IC03                            VALUE 'IC03'.  00830021
+008400                                                                  00840021
+008500     05  IND-IMPORT-LOCATION-STATUS     PIC  X     VALUE 'N'.     00850021
+008600         88  IMPORT-LOCATION-SUPPLIED              VALUE 'Y'.     00860021
+008700         88  IMPORT-LOCATION-NOT-SUPPLIED          VALUE 'N'.     00870021
+008800                                                                  00880021
+008900     05  IND-NEW-ENTITY-STATUS          PIC X      VALUE 'N'.     00890021
+009000         88  NEW-ENTITY-ADDED                      VALUE 'Y'.     00900021
+009100         88  NEW-ENTITY-NOT-ADDED                  VALUE 'N'.     00910021
+009200                                                                  00920021
+009300     05  IND-NEW-LOCATION-STATUS        PIC X      VALUE 'N'.     00930021
+009400         88  NEW-LOCATION-ADDED                    VALUE 'Y'.     00940021
+009500         88  NEW-LOCATION-NOT-ADDED                VALUE 'N'.     00950021
+009600                                                                  00960021
+009700     05  IND-NEW-DEVICE-STATUS          PIC X      VALUE 'N'.     00970021
+009800         88  NEW-DEVICE-ADDED                      VALUE 'Y'.     00980021
+009900         88  NEW-DEVICE-NOT-ADDED                  VALUE 'N'.     00990021
+010000                                                                  01000021
+010100     05  IND-NEW-JULIAN-DATE-STATUS     PIC  X     VALUE 'N'.     01010021
+010200         88  NEW-JULIAN-DATE-ADDED                 VALUE 'Y'.     01020021
+010300         88  NEW-JULIAN-DATE-NOT-ADDED             VALUE 'N'.     01030021
+010400                                                                  01040021
+010500     05  IND-LOCATION-FILEKEY-STATUS    PIC  X     VALUE 'N'.     01050021
+010600         88  LOCATION-FILEKEY-BUILT                VALUE 'Y'.     01060021
+010700         88  LOCATION-FILEKEY-NOT-BUILT            VALUE 'N'.     01070021
+010800                                                                  01080021
+010900     05  IND-INSTFILE-STATUS            PIC  X     VALUE 'N'.     01090021
+011000         88  RECORD-FOUND                          VALUE 'Y'.     01100021
+011100         88  RECORD-NOT-FOUND                      VALUE 'N'.     01110021
+011200         88  READ-ERROR                            VALUE 'R'.     01120021
+011300         88  WRITE-ERROR                           VALUE 'W'.     01130021
+011400                                                                  01140021
+011500     05  IND-ONE-STATUS                 PIC  X     VALUE 'N'.     01150021
+011600         88  ONE-USED                              VALUE 'Y'.     01160021
+011700         88  ONE-NOT-USED                          VALUE 'N'.     01170021
+011800                                                                  01180021
+011900     05  IND-TWO-STATUS                 PIC  X     VALUE 'N'.     01190021
+012000         88  TWO-USED                              VALUE 'Y'.     01200021
+012100         88  TWO-NOT-USED                          VALUE 'N'.     01210021
+012200                                                                  01220021
+012300     05  IND-THREE-STATUS               PIC  X     VALUE 'N'.     01230021
+012400         88  THREE-USED                            VALUE 'Y'.     01240021
+012500         88  THREE-NOT-USED                        VALUE 'N'.     01250021
+012600                                                                  01260021
+012700     05  IND-FOUR-STATUS                PIC  X     VALUE 'N'.     01270021
+012800         88  FOUR-USED                             VALUE 'Y'.     01280021
+012900         88  FOUR-NOT-USED                         VALUE 'N'.     01290021
+013000                                                                  01300021
+013100     05  IND-INSTANCE-ORDER-STATUS      PIC  X     VALUE 'N'.     01310021
+013200         88  INSTANCE-ORDER-OK                     VALUE 'Y'.     01320021
+013300         88  INSTANCE-ORDER-ERROR                  VALUE 'N'.     01330021
+013400                                                                  01340021
+013500     05  IND-REVERSE-SEQNBR-STATUS      PIC  X     VALUE 'N'.     01350021
+013600         88  REVERSE-SEQNBR                        VALUE 'Y'.     01360021
+013700         88  DONT-REVERSE-SEQNBR                   VALUE 'N'.     01370021
+013800                                                                  01380021
+013900/                                                                 01390021
+014000***************************************************************** 01400021
+014100*                                                               * 01410021
+014200*    WORK FIELDS                                                * 01420021
+014300*                                                               * 01430021
+014400***************************************************************** 01440021
+014500                                                                  01450021
+014600 01  WK-WORKAREA.                                                 01460021
+014700     05  WK-ABSTIME                     PIC S9(16) COMP VALUE +0. 01470021
+014800     05  WK-ABSTIME-UPK                 PIC  9(16) VALUE ZERO.    01480021
+014900     05  WK-ABSTIME-BRK.                                          01490021
+015000         10  FILLER                     PIC  9(12) VALUE ZERO.    01500021
+015100         10  WK-ABSTIME-13TO16          PIC  9(04) VALUE ZERO.    01510021
+015200     05  WK-CURRENT-JULIAN-DATE.                                  01520021
+015300         10  WK-CURRENT-JULIAN-YEAR.                              01530021
+015400             15  WK-CURRENT-JULIAN-Y1   PIC  9(01) VALUE ZERO.    01540021
+015500             15  WK-CURRENT-JULIAN-Y2   PIC  9(01) VALUE ZERO.    01550021
+015600         10  WK-CURRENT-JULIAN-DAY      PIC  9(03) VALUE ZERO.    01560021
+015700     05  WK-FILEKEY.                                              01570021
+015800         10  WK-FILEKEY-LOCATION-ID     PIC  9(04) VALUE ZERO.    01580021
+015900         10  WK-FILEKEY-DEVICE-ID       PIC  9(03) VALUE ZERO.    01590021
+016000         10  WK-FILEKEY-ENTITY-NAME     PIC  X(32) VALUE SPACES.  01600021
+016100     05  WK-ORDER                       PIC  X(08) VALUE SPACES.  01610021
+016200     05  WK-ORDER-TBL                   REDEFINES                 01620021
+016300         WK-ORDER.                                                01630021
+016400         10  WK-ORDER-CHAR              PIC  X(01) OCCURS 8.      01640021
+016500     05  WK-RVSX-SEQNBR                 PIC  9(04).               01650021
+016600     05  WK-RVSX-SEQNBR-TBL             REDEFINES                 01660021
+016700         WK-RVSX-SEQNBR.                                          01670021
+016800         10  WK-RVSX-SEQNBR-CHAR        PIC  X(01) OCCURS 4.      01680021
+016900     05  WK-RVSY-SEQNBR                 PIC  9(04).               01690021
+017000     05  WK-RVSY-SEQNBR-TBL             REDEFINES                 01700021
+017100         WK-RVSY-SEQNBR.                                          01710021
+017200         10  WK-RVSY-SEQNBR-CHAR        PIC  X(01) OCCURS 4.      01720021
+017300     05  WK-DEFAULT-INSTANCE.                                     01730021
+017400         10  WK-DEFAULT-LOCATION-ID     PIC  9(04) VALUE ZERO.    01740021
+017500         10  WK-DEFAULT-DEVICE-ID       PIC  9(03) VALUE ZERO.    01750021
+017600         10  WK-DEFAULT-JULIAN-Y2       PIC  9(01) VALUE ZERO.    01760021
+017700         10  WK-DEFAULT-JULIAN-DAY      PIC  9(03) VALUE ZERO.    01770021
+017800         10  WK-DEFAULT-SEQNBR          PIC  9(04) VALUE ZERO.    01780021
+017900     05  WK-ASSEMBLE-INSTANCE.                                    01790021
+018000         10  WK-ASSEMBLE-LOCATION-ID    PIC  9(04) VALUE ZERO.    01800021
+018100         10  WK-ASSEMBLE-DEVICE-ID      PIC  9(03) VALUE ZERO.    01810021
+018200         10  WK-ASSEMBLE-JULIAN-Y2      PIC  9(01) VALUE ZERO.    01820021
+018300         10  WK-ASSEMBLE-JULIAN-DAY     PIC  9(03) VALUE ZERO.    01830021
+018400         10  WK-ASSEMBLE-SEQNBR         PIC  9(04) VALUE ZERO.    01840021
+018500     05  WK-STRING-INSTANCE             PIC  X(15) VALUE SPACES.  01850021
+018600     05  WK-INSTFILE-OLD-SEQNBR.                                  01860021
+018700         10  WK-INSTFILE-OLD-SEQNBR-N   PIC  9(04).               01870021
+018800         10  FILLER                     PIC  X(3).                01880021
+018920     05  WK-DFLT-START-LOC-SUB        PIC  9(04) VALUE ZERO.      01892027
+018930     05  WK-DFLT-START-LOC.                                       01893027
+019000         10  WK-DFLT-START-LOC1       PIC  9(02) VALUE ZERO.      01900021
+019100         10  WK-DFLT-START-LOC2       PIC  9(01) VALUE ZERO.      01910025
+019200         10  WK-DFLT-START-LOC3       PIC  9(01) VALUE ZERO.      01920026
+019300                                                                  01930021
+019400 01  WK-SUBSCRIPTS.                                               01940021
+019500     05  WK-FILEKEY-SUB                 PIC  9(05) VALUE ZERO.    01950021
+019600     05  WK-ORDER-SUB                   PIC  9(05) VALUE ZERO.    01960021
+019700     05  WK-RVSX-SUB                    PIC  9(05) VALUE ZERO.    01970021
+019800     05  WK-RVSY-SUB                    PIC  9(05) VALUE ZERO.    01980021
+019900                                                                  01990021
+020000 01  WK-INSTFILE-RECORD.                                          02000021
+020100     05  WK-INSTFILE-KEY.                                         02010021
+020200         10  WK-INSTFILE-LOCATION-ID    PIC  9(04).               02020021
+020300         10  WK-INSTFILE-DEVICE-ID      PIC  9(03).               02030021
+020400         10  WK-INSTFILE-ENTITY-NAME    PIC  X(32).               02040021
+020500     05  WK-INSTFILE-JULIAN-DATE.                                 02050021
+020600         10  WK-INSTFILE-JULIAN-YEAR.                             02060021
+020700             15  WK-INSTFILE-JULIAN-Y1  PIC  9(01).               02070021
+020800             15  WK-INSTFILE-JULIAN-Y2  PIC  9(01).               02080021
+020900         10  WK-INSTFILE-JULIAN-DAY     PIC  9(03).               02090021
+021000     05  WK-INSTFILE-SEQNBR-X.                                    02100021
+021100         10 WK-INSTFILE-SEQNBR          PIC  9(07).               02110021
+021200     05  FILLER                         PIC  X(13).               02120021
+021300                                                                  02130021
+021400/                                                                 02140021
+021500     COPY COBRSP.                                                 02150021
+021600/                                                                 02160021
+021700***************************************************************** 02170021
+021800*                                                               * 02180021
+021900*    LINKAGE SECTION                                            * 02190021
+022000*                                                               * 02200021
+022100***************************************************************** 02210021
+022200                                                                  02220021
+022300 LINKAGE SECTION.                                                 02230021
+022400                                                                  02240021
+022500 01  GLOBDATA.                                                    02250021
+022600     03  PSMGR-IEF-COMMAND.                                       02260021
+022700         05  PSMGR-IEF-COMMAND-1        PIC X(8).                 02270021
+022800         05  PSMGR-IEF-COMMAND-2        PIC X(72).                02280021
+022900     03  PSMGR-IEF-TRANCODE             PIC X(8).                 02290021
+023000     03  PSMGR-EXIT-STATE               PIC S9(11) COMP-3.        02300021
+023100     03  PSMGR-EXIT-INFOMSG             PIC X(80).                02310021
+023200     03  PSMGR-USER-ID                  PIC X(8).                 02320021
+023300     03  PSMGR-TERMINAL-ID              PIC X(8).                 02330021
+023400     03  PSMGR-PRINTER-ID               PIC X(8).                 02340021
+023500     03  PSMGR-CURRENT-DATE             PIC S9(9) COMP.           02350021
+023600     03  PSMGR-CURRENT-TIME             PIC S9(9) COMP.           02360021
+023700     03  PSMGR-RUNTIME-TYPE             PIC X(4).                 02370021
+023800     03  PSMGR-FUNCTION-DATA.                                     02380021
+023900         05  PSMGR-FUNC-ERRMSG          PIC X(4).                 02390021
+024000         05  PSMGR-FUNC-NAME            PIC X(8).                 02400021
+024100         05  PSMGR-FUNC-IN-DATE         PIC X(8).                 02410021
+024200         05  PSMGR-FUNC-IN-DDURA.                                 02420021
+024300             07  DDURA-YEAR.                                      02430021
+024400                 09  DDURA-Y-MISS       PIC X.                    02440021
+024500                 09  DDURA-YYYY         PIC S9(9) COMP.           02450021
+024600             07  DDURA-MONTH.                                     02460021
+024700                 09  DDURA-M-MISS       PIC X.                    02470021
+024800                 09  DDURA-MM           PIC S9(9) COMP.           02480021
+024900             07  DDURA-DAY.                                       02490021
+025000                 09  DDURA-D-MISS       PIC X.                    02500021
+025100                 09  DDURA-DD           PIC S9(9) COMP.           02510021
+025200         05  PSMGR-FUNC-OUT-DATE        PIC X(8).                 02520021
+025300         05  PSMGR-FUNC-IN-TIME         PIC X(6).                 02530021
+025400         05  PSMGR-FUNC-IN-TDURA.                                 02540021
+025500             07  TDURA-HOUR.                                      02550021
+025600                 09  TDURA-H-MISS       PIC X.                    02560021
+025700                 09  TDURA-HH           PIC S9(9) COMP.           02570021
+025800             07  TDURA-MINUTE.                                    02580021
+025900                 09  TDURA-M-MISS       PIC X.                    02590021
+026000                 09  TDURA-MM           PIC S9(9) COMP.           02600021
+026100             07  TDURA-SECOND.                                    02610021
+026200                 09  TDURA-S-MISS       PIC X.                    02620021
+026300                 09  TDURA-SS           PIC S9(9) COMP.           02630021
+026400         05  PSMGR-FUNC-OUT-TIME        PIC X(6).                 02640021
+026500     03  FILLER                         PIC X(2).                 02650021
+026600     03  PSMGR-IEF-NEXTTRAN             PIC X(80).                02660021
+026700     03  PSMGR-EXIT-MSGTYPE             PIC X(1).                 02670021
+026800     03  FILLER                         PIC X(11).                02680021
+026900     03  PSMGR-IEF-DEBUG-FLAGS.                                   02690021
+027000         05  PSMGR-IEF-DEBUG            PIC X.                    02700021
+027100             88  PSMGR-DEBUG-ON               VALUE 'Y'.          02710021
+027200         05  FILLER                     PIC X(15).                02720021
+027300     03  PSMGR-ENVIRONMENT-DATA.                                  02730021
+027400         05 PSMGR-PCB-CNT               PIC S9(9) COMP SYNC.      02740021
+027500         05 PSMGR-PCB-ENTRY                   OCCURS 255.         02750021
+027600            07 PSMGR-PCB-ADR            PIC S9(9) COMP SYNC.      02760021
+027700     03  PSMGR-EAB-DATA.                                          02770021
+027800         05 PSMGR-EABPCB-CNT            PIC S9(9) COMP SYNC.      02780021
+027900         05 PSMGR-EABPCB-ENTRY                OCCURS 255.         02790021
+028000            07 PSMGR-EABPCB-ADR         PIC S9(9) COMP SYNC.      02800021
+028100     03  PSMGR-ERROR-DATA.                                        02810021
+028200         05 ERROR-ACTION-NAME           PIC X(32).                02820021
+028300         05 ERROR-ENCOUNTERED-SW        PIC X.                    02830021
+028400         05 VIEW-OVERFLOW-SW            PIC X.                    02840021
+028500     03  PSMGR-DASG-DATA.                                         02850021
+028600         05 ACTION-ID-X.                                          02860021
+028700            07 ACTION-ID                PIC 9(10).                02870021
+028800         05 ATTRIBUTE-ID-X.                                       02880021
+028900            07 ATTRIBUTE-ID             PIC 9(10).                02890021
+029000         05 STATUS-FLAG                 PIC XX.                   02900021
+029100            88 FATAL-ERROR-SF           VALUE 'FE'.               02910021
+029200            88 PSTEP-USE-FAILURE        VALUE 'PU'.               02920021
+029300         05 LAST-STATUS                 PIC XX.                   02930021
+029400            88 DB-ERROR-FL-LS           VALUE 'DB'.               02940021
+029500            88 DUPLICATE-FOUND-FL-LS    VALUE 'DF'.               02950021
+029600            88 INVALID-DATAA-FL-LS      VALUE 'IA'.               02960021
+029700            88 INVALID-DATAB-TYPE-FL-LS VALUE 'BT'.               02970021
+029800            88 INVALID-DATAB-PERM-FL-LS VALUE 'BP'.               02980021
+029900            88 FATAL-ERROR-FL-LS        VALUE 'FE'.               02990021
+030000            88 NOT-FOUND-FL-LS          VALUE 'NF'.               03000021
+030100            88 NOT-UNIQUE-FL-LS         VALUE 'NU'.               03010021
+030200            88 IEF-FUNCTION-ERROR-FL-LS VALUE 'IE'.               03020021
+030300            88 IEF-DURATION-ERROR-FL-LS VALUE 'DE'.               03030021
+030400            88 USED-PSTEP-NOT-FOUND     VALUE 'PO'.               03040021
+030500            88 USED-PSTEP-ROUTING-ERR   VALUE 'PX'.               03050021
+030600            88 USED-PSTEP-SND-FMT-ERR   VALUE 'PF'.               03060021
+030700            88 USED-PSTEP-ENCRYPT-ERR   VALUE 'PN'.               03070021
+030800            88 USED-PSTEP-SND-BFR-ERR   VALUE 'PS'.               03080021
+030900            88 USED-PSTEP-RCV-BFR-ERR   VALUE 'PR'.               03090021
+031000            88 USED-PSTEP-RCV-FMT-ERR   VALUE 'PU'.               03100021
+031100            88 USED-PSTEP-TIRSECR-ERR   VALUE 'PE'.               03110021
+031200            88 USED-PSTEP-TOKEN-ERR     VALUE 'PT'.               03120021
+031300            88 USED-PSTEP-SEND-MAX-SIZE VALUE 'PM'.               03130021
+031400            88 USED-PSTEP-SECG-ERR      VALUE 'PB'.               03140021
+031500            88 USED-PSTEP-ALLOC-ERR     VALUE 'PA'.               03150021
+031600            88 USED-PSTEP-CONNECT-ERR   VALUE 'PC'.               03160021
+031700            88 USED-PSTEP-XERR          VALUE 'PD'.               03170021
+031800            88 USED-PSTEP-RCV-UA-ERR    VALUE 'PH'.               03180021
+031900            88 USED-PSTEP-RCV-ES-ERR    VALUE 'PI'.               03190021
+032000            88 USED-PSTEP-XFAL          VALUE 'PJ'.               03200021
+032100            88 USED-PSTEP-SETOA-ERR     VALUE 'PK'.               03210021
+032200            88 USED-PSTEP-RCV-VIEW-ERR  VALUE 'PL'.               03220021
+032300            88 USED-PSTEP-DECRYPT-ERR   VALUE 'PP'.               03230021
+032400         05 SAVE-SQLCA                  PIC X(255).               03240021
+032500     03  PSMGR-DEBUG-DATA.                                        03250021
+032600         05 PSMGR-TRACE-ADR             PIC S9(9) COMP SYNC.      03260021
+032700         05 LAST-STATEMENT-X.                                     03270021
+032800            07 LAST-STATEMENT-NUM       PIC 9(10).                03280021
+032900         05 CUR-AB-ID                   PIC X(10).                03290021
+033000         05 CUR-AB-NAME                 PIC X(32).                03300021
+033100     03  PSMGR-TIRDATE-SAVEAREA         PIC X(12).                03310021
+033200     03  PSMGR-TIRDATE-CMCB.                                      03320021
+033300         05  PSMGR-TIRDATE-DATE         PIC S9(9) COMP.           03330021
+033400         05  PSMGR-TIRDATE-TIME         PIC S9(9) COMP.           03340021
+033500         05  FILLER                     PIC S9(18) COMP.          03350021
+033600         05  PSMGR-TIRDATE-INC          PIC S9(9) COMP.           03360021
+033700         05  PSMGR-TIRDATE-RC           PIC S9(4) COMP.           03370021
+033800             88  PSMGR-TIRDATE-OK       VALUE +0.                 03380021
+033900             88  PSMGR-TIRDATE-WARNING  VALUE +4.                 03390021
+034000             88  PSMGR-TIRDATE-ERROR    VALUE +8.                 03400021
+034100         05  PSMGR-TIRDATE-REQ          PIC 9(1).                 03410021
+034200         05  PSMGR-TIRDATE-DATEF        PIC 9(1).                 03420021
+034300         05  PSMGR-TIRDATE-TIMEF        PIC 9(1).                 03430021
+034400         05  PSMGR-TIRDATE-RETMSG       PIC X(60).                03440021
+034500         05  PSMGR-TIRDATE-TSTAMP       PIC X(20).                03450021
+034600         05  FILLER  REDEFINES  PSMGR-TIRDATE-TSTAMP.             03460021
+034700             07  PSMGR-TIRDATE-DATE-Z   PIC 9(8).                 03470021
+034800             07  PSMGR-TIRDATE-TIME-Z   PIC 9(8).                 03480021
+034900             07  FILLER  PIC X(4).                                03490021
+035000         05  FILLER  PIC X(96).                                   03500021
+035100     03  PSMGR-ROLLBACK-RQSTED          PIC X.                    03510021
+035200         88 ROLLBACK-RQSTED             VALUE 'R'.                03520021
+035300         88 ABEND-RQSTED                VALUE 'A'.                03530021
+035400         88 TERMINATE-RQSTED            VALUE 'T'.                03540021
+035500     03  TIRTRCE-SAVE-AREA.                                       03550021
+035600         05  TOP-INDX                   PIC S9(9) COMP.           03560021
+035700         05  BOTTOM-INDX                PIC S9(9) COMP.           03570021
+035800         05  END-INDX                   PIC S9(9) COMP.           03580021
+035900         05  LAST-STMT                  PIC 9(9) COMP.            03590021
+036000         05  TOP-OF-CALL                PIC S9(9) COMP.           03600021
+036100         05  TRACE-BREAK-POINT          PIC S9(9) COMP.           03610021
+036200         05  TRACE-BREAK-POINT-STATUS   PIC X(3).                 03620021
+036300         05  LAST-AB-NAME               PIC X(32).                03630021
+036400         05  COLOR                      PIC X(15).                03640021
+036500         05  COLORT                     PIC X(15).                03650021
+036600         05  HILITE                     PIC X(15).                03660021
+036700         05  TRACE-ON-OFF               PIC X(3).                 03670021
+036800     03  CASCADE-DELETE-FLAGS.                                    03680021
+036900         05  V1PRESENT                  PIC X.                    03690021
+037000         05  V2PRESENT                  PIC X.                    03700021
+037100         05  CASCADE1                   PIC X.                    03710021
+037200         05  CASCADE2                   PIC X.                    03720021
+037300         05  PROCESSQ-FLAG              PIC X.                    03730021
+037400     03  PSMGR-ACTIVE-DIALECT.                                    03740021
+037500         05  DIALECT-NAME               PIC X(8).                 03750021
+037600         05  MESSAGE-TABLE-NAME         PIC X(8).                 03760021
+037700         05  TRANSLATE-TABLE-NAME       PIC X(8).                 03770021
+037800     03  PSMGR-FUNCTION-DATA-EXT.                                 03780021
+037900         05  PSMGR-FUNC-IN-TIMESTAMP    PIC X(20).                03790021
+038000         05  PSMGR-FUNC-IN-TSDURA.                                03800021
+038100             07  TSDURA-MICROSECOND.                              03810021
+038200                 09  TSDURA-M-MISS      PIC X.                    03820021
+038300                 09  TSDURA-MS          PIC S9(9) COMP.           03830021
+038400         05  PSMGR-FUNC-OUT-TIMESTAMP   PIC X(20).                03840021
+038500     03  FILLER                         PIC X(8).                 03850021
+038600     03  PSMGR-CICS-FAIL-SW             PIC X(1).                 03860021
+038700         88 INHIBIT-CICS-RECEIVE        VALUE 'I'.                03870021
+038800     03  CLIENT-USERID                  PIC X(64).                03880021
+038900     03  CLIENT-PASSWORD                PIC X(64).                03890021
+039000     03  LOAD-MODULE-NAME               PIC X(8).                 03900021
+039100     03  INSTRUMENT-CODE                PIC S9(9) COMP.           03910021
+039200     03  TX-RETRY-LIMIT                 PIC S9(9) COMP.           03920021
+039300     03  TX-TIMEOUT                     PIC S9(9) COMP.           03930021
+039400     03  PSMGR-EXTRA-ERRINFO.                                     03940021
+039500         05  ERRINFO-BUF-SIZE           PIC S9(9) COMP.           03950021
+039600         05  ERRINFO-MSG-SIZE           PIC S9(9) COMP.           03960021
+039700         05  ERRINFO-BUF-ADDR           PIC X(16).                03970021
+039800     03  PSMGR-PSTEP-USE-PTRS.                                    03980021
+039900         05  PSTEP-FAIL-MSG-PTR         POINTER.                  03990021
+040000         05  PSTEP-GURB-REST-PTR        POINTER.                  04000021
+040100         05  PSTEP-LIPS-PTR             POINTER.                  04010021
+040200         05  PSTEP-TBL-PTR              POINTER.                  04020021
+040300         05  PSTEP-DDF-PTR              POINTER.                  04030021
+040400         05  PSTEP-COMM-ID              PIC X(08).                04040021
+040500         05  PSTEP-APPL-LIST-PTR        POINTER.                  04050021
+040600         05  PSTEP-CURR-PST-PTR         POINTER.                  04060021
+040700     03  PSMGR-PSTEP-USE-SYSFLDS.                                 04070021
+040800         05  PSMGR-EIBERRCD             PIC X(04).                04080021
+040900         05  PSMGR-EIBFN                PIC X(02).                04090021
+041000         05  PSMGR-EIBRESP              PIC X(08).                04100021
+041100         05  PSMGR-EIBRESP2             PIC X(08).                04110021
+041200     03  FILLER                         PIC X(199).               04120021
+041300                                                                  04130021
+041400 01  IMPORT-0001EV.                                               04140021
+041500     03  EWW-SUPPLIED-0001ET.                                     04150021
+041600         05  ENTITY-TYPE-NAME-0001AS    PIC X(0001).              04160021
+041700         05  ENTITY-TYPE-NAME-0001      PIC X(0032).              04170021
+041800                                                                  04180021
+041900 01  IMPORT-0002EV.                                               04190021
+042000     03  III1-INSTANCEID-0002ET.                                  04200021
+042100         05  HARDWARE-LOCATION-0002AS   PIC X(0001).              04210021
+042200         05  HARDWARE-LOCATION-0002     PIC S9(0004).             04220021
+042300         05  HARDWARE-DEVICE-0002AS     PIC X(0001).              04230021
+042400         05  HARDWARE-DEVICE-0002       PIC S9(0003).             04240021
+042500         05  DATE-CODE-0002AS           PIC X(0001).              04250021
+042600         05  DATE-CODE-0002             PIC S9(0004).             04260021
+042700         05  SEQUENCE-0002AS            PIC X(0001).              04270021
+042800         05  SEQUENCE-0002              PIC S9(0004).             04280021
+042900         05  TYPE-0002AS                PIC X(0001).              04290021
+043000         05  TYPE-0002                  PIC X(0001).              04300021
+043100         05  ORDER-0002AS               PIC X(0001).              04310021
+043200         05  ORDER-0002                 PIC X(0008).              04320021
+043300         05  FILE-NAME-0002AS           PIC X(0001).              04330021
+043400         05  FILE-NAME-0002             PIC X(0254).              04340021
+043500         05  FILE-HANDLE-0002AS         PIC X(0001).              04350021
+043600         05  FILE-HANDLE-0002           PIC S9(0009).             04360021
+043700                                                                  04370021
+043800 01  EXPORT-0003EV.                                               04380021
+043900     03  EWW-SUPPLIED-0003ET.                                     04390021
+044000         05  INSTANCE-ID-0003AS         PIC X(0001).              04400021
+044100         05  INSTANCE-ID-0003           PIC S9(0015).             04410021
+044200         05  ENTITY-TYPE-NAME-0003AS    PIC X(0001).              04420021
+044300         05  ENTITY-TYPE-NAME-0003      PIC X(0032).              04430021
+044400                                                                  04440021
+044500 01  EXPORT-0004EV.                                               04450021
+044600     03  III1-INSTANCEID-0004ET.                                  04460021
+044700         05  HARDWARE-LOCATION-0004AS   PIC X(0001).              04470021
+044800         05  HARDWARE-LOCATION-0004     PIC S9(0004).             04480021
+044900         05  HARDWARE-DEVICE-0004AS     PIC X(0001).              04490021
+045000         05  HARDWARE-DEVICE-0004       PIC S9(0003).             04500021
+045100         05  DATE-CODE-0004AS           PIC X(0001).              04510021
+045200         05  DATE-CODE-0004             PIC S9(0004).             04520021
+045300         05  SEQUENCE-0004AS            PIC X(0001).              04530021
+045400         05  SEQUENCE-0004              PIC S9(0004).             04540021
+045500         05  TYPE-0004AS                PIC X(0001).              04550021
+045600         05  TYPE-0004                  PIC X(0001).              04560021
+045700         05  ORDER-0004AS               PIC X(0001).              04570021
+045800         05  ORDER-0004                 PIC X(0008).              04580021
+045900         05  FILE-NAME-0004AS           PIC X(0001).              04590021
+046000         05  FILE-NAME-0004             PIC X(0254).              04600021
+046100         05  FILE-HANDLE-0004AS         PIC X(0001).              04610021
+046200         05  FILE-HANDLE-0004           PIC S9(0009).             04620021
+046300         05  ERROR-0004AS               PIC X(0001).              04630021
+046400         05  ERROR-0004                 PIC S9(0009).             04640021
+046500                                                                  04650021
+046600/                                                                 04660021
+046700***************************************************************** 04670021
+046800*                                                               * 04680021
+046900*    PROCEDURE DIVISION                                         * 04690021
+047000*                                                               * 04700021
+047100***************************************************************** 04710021
+047200                                                                  04720021
+047300 PROCEDURE DIVISION USING                                         04730021
+047400       GLOBDATA,                                                  04740021
+047500       IMPORT-0001EV,                                             04750021
+047600       IMPORT-0002EV,                                             04760021
+047700       EXPORT-0003EV,                                             04770021
+047800       EXPORT-0004EV.                                             04780021
+047900                                                                  04790021
+048000***************************************************************** 04800021
+048100*                                                               * 04810021
+048200*    CONTROL                                                    * 04820021
+048300*                                                               * 04830021
+048400***************************************************************** 04840021
+048500                                                                  04850021
+048600 A0000-CONTROL.                                                   04860021
+048700                                                                  04870021
+048800     PERFORM     B0000-INITIALIZE.                                04880021
+048900     PERFORM     C0000-PROCESS.                                   04890021
+049000     PERFORM     D0000-CAPTURE-EXPORTS.                           04900021
+049100     GOBACK.                                                      04910021
+049200                                                                  04920021
+049300/                                                                 04930021
+049400***************************************************************** 04940021
+049500*                                                               * 04950021
+049600*    INITIALIZE                                                 * 04960021
+049700*                                                               * 04970021
+049800***************************************************************** 04980021
+049900                                                                  04990021
+050000 B0000-INITIALIZE.                                                05000021
+050100                                                                  05010021
+050200     PERFORM B1000-RESET-WORKING-STORAGE.                         05020021
+050300     PERFORM B2000-CHECK-IMPORT-LOCATION.                         05030021
+050400     PERFORM B3000-CHECK-IMPORT-ORDER.                            05040021
+050500     PERFORM B4000-GET-CURRENT-JULIAN-DATE.                       05050021
+050600     PERFORM B5000-BUILD-DEFAULT-INSTANCE.                        05060021
+050700                                                                  05070021
+050800/                                                                 05080021
+050900***************************************************************** 05090021
+051000*                                                               * 05100021
+051100*    RESET WORKING STORAGE                                      * 05110021
+051200*                                                               * 05120021
+051300***************************************************************** 05130021
+051400                                                                  05140021
+051500 B1000-RESET-WORKING-STORAGE.                                     05150021
+051600                                                                  05160021
+051700     MOVE 'DUMP' TO WK-ABEND-CODE.                                05170021
+051800                                                                  05180021
+051900     SET IMPORT-LOCATION-NOT-SUPPLIED   TO TRUE.                  05190021
+052000     SET NEW-ENTITY-NOT-ADDED           TO TRUE.                  05200021
+052100     SET NEW-LOCATION-NOT-ADDED         TO TRUE.                  05210021
+052200     SET NEW-DEVICE-NOT-ADDED           TO TRUE.                  05220021
+052300     SET NEW-JULIAN-DATE-NOT-ADDED      TO TRUE.                  05230021
+052400     SET LOCATION-FILEKEY-NOT-BUILT     TO TRUE.                  05240021
+052500     SET RECORD-NOT-FOUND               TO TRUE.                  05250021
+052600     SET ONE-NOT-USED                   TO TRUE.                  05260021
+052700     SET TWO-NOT-USED                   TO TRUE.                  05270021
+052800     SET THREE-NOT-USED                 TO TRUE.                  05280021
+052900     SET FOUR-NOT-USED                  TO TRUE.                  05290021
+053000     SET INSTANCE-ORDER-OK              TO TRUE.                  05300021
+053100     SET DONT-REVERSE-SEQNBR            TO TRUE.                  05310021
+053200                                                                  05320021
+053300     INITIALIZE WK-WORKAREA.                                      05330021
+053400     INITIALIZE WK-SUBSCRIPTS.                                    05340021
+053500     INITIALIZE WK-INSTFILE-RECORD.                               05350021
+053600                                                                  05360021
+053700/                                                                 05370021
+053800***************************************************************** 05380021
+053900*                                                               * 05390021
+054000*    CHECK IMPORT LOCATION                                      * 05400021
+054100*                                                               * 05410021
+054200***************************************************************** 05420021
+054300                                                                  05430021
+054400 B2000-CHECK-IMPORT-LOCATION.                                     05440021
+054500                                                                  05450021
+054600     IF  HARDWARE-LOCATION-0002 = 0                               05460021
+054700         SET IMPORT-LOCATION-NOT-SUPPLIED TO TRUE                 05470021
+054800     ELSE                                                         05480021
+054900         SET IMPORT-LOCATION-SUPPLIED TO TRUE                     05490021
+055000     END-IF.                                                      05500021
+055100                                                                  05510021
+055200/                                                                 05520021
+055300***************************************************************** 05530021
+055400*                                                               * 05540021
+055500*    CHECK IMPORT ORDER                                         * 05550021
+055600*                                                               * 05560021
+055700*    - IF THE INSTANCE ORDER IS NOT VALID, USE THE DEFAULT      * 05570021
+055800*                                                               * 05580021
+055900***************************************************************** 05590021
+056000                                                                  05600021
+056100 B3000-CHECK-IMPORT-ORDER.                                        05610021
+056200                                                                  05620021
+056300     MOVE ORDER-0002 TO WK-ORDER.                                 05630021
+056400                                                                  05640021
+056500     PERFORM VARYING WK-ORDER-SUB                                 05650021
+056600           FROM 1 BY 1 UNTIL WK-ORDER-SUB > 4                     05660021
+056700                                                                  05670021
+056800           IF  WK-ORDER-CHAR(WK-ORDER-SUB) = '1'                  05680021
+056900                    IF  ONE-USED                                  05690021
+057000                        SET INSTANCE-ORDER-ERROR TO TRUE          05700021
+057100                    ELSE                                          05710021
+057200                        SET ONE-USED TO TRUE                      05720021
+057300                    END-IF                                        05730021
+057400           ELSE IF  WK-ORDER-CHAR(WK-ORDER-SUB) = '2'             05740021
+057500                    IF  TWO-USED                                  05750021
+057600                        SET INSTANCE-ORDER-ERROR TO TRUE          05760021
+057700                    ELSE                                          05770021
+057800                        SET TWO-USED TO TRUE                      05780021
+057900                    END-IF                                        05790021
+058000           ELSE IF  WK-ORDER-CHAR(WK-ORDER-SUB) = '3'             05800021
+058100                    IF  THREE-USED                                05810021
+058200                        SET INSTANCE-ORDER-ERROR TO TRUE          05820021
+058300                    ELSE                                          05830021
+058400                        SET THREE-USED TO TRUE                    05840021
+058500                    END-IF                                        05850021
+058600           ELSE IF  WK-ORDER-CHAR(WK-ORDER-SUB) = '4'             05860021
+058700                    IF  FOUR-USED                                 05870021
+058800                        SET INSTANCE-ORDER-ERROR TO TRUE          05880021
+058900                    ELSE                                          05890021
+059000                        SET FOUR-USED TO TRUE                     05900021
+059100                    END-IF                                        05910021
+059200           ELSE                                                   05920021
+059300                    SET INSTANCE-ORDER-ERROR TO TRUE              05930021
+059400           END-IF                                                 05940021
+059500           END-IF                                                 05950021
+059600           END-IF                                                 05960021
+059700           END-IF                                                 05970021
+059800                                                                  05980021
+059900     END-PERFORM.                                                 05990021
+060000                                                                  06000021
+060100     IF  INSTANCE-ORDER-ERROR                                     06010021
+060200           MOVE '1234    ' TO WK-ORDER                            06020021
+060300     END-IF.                                                      06030021
+060400                                                                  06040021
+060500     MOVE 5 TO WK-ORDER-SUB.                                      06050021
+060600     IF WK-ORDER-CHAR(WK-ORDER-SUB) = 'F'                         06060021
+060700          SET DONT-REVERSE-SEQNBR TO TRUE                         06070021
+060800     ELSE                                                         06080021
+060900          SET REVERSE-SEQNBR TO TRUE                              06090021
+061000     END-IF.                                                      06100021
+061100                                                                  06110021
+061200/                                                                 06120021
+061300***************************************************************** 06130021
+061400*                                                               * 06140021
+061500*    GET CURRENT JULIAN DATE                                    * 06150021
+061600*                                                               * 06160021
+061700***************************************************************** 06170021
+061800                                                                  06180021
+061900 B4000-GET-CURRENT-JULIAN-DATE.                                   06190021
+062000                                                                  06200021
+062100     SET ABEND-IC01 TO TRUE.                                      06210021
+062200     EXEC CICS HANDLE CONDITION                                   06220021
+062300           ERROR (Z9999-ABEND)                                    06230021
+062400     END-EXEC.                                                    06240021
+062500     SET ABEND-IC02 TO TRUE.                                      06250021
+062600     EXEC CICS                                                    06260021
+062700           ASKTIME                                                06270021
+062800           ABSTIME (WK-ABSTIME)                                   06280021
+062900           RESP    (RSP-CODE)                                     06290021
+063000     END-EXEC.                                                    06300021
+063100     IF  RSP-NORMAL                                               06310021
+063200           MOVE WK-ABSTIME TO WK-ABSTIME-UPK                      06320021
+063300           MOVE WK-ABSTIME-UPK TO WK-ABSTIME-BRK                  06330021
+063400           SET ABEND-IC03 TO TRUE                                 06340021
+063500           EXEC CICS FORMATTIME                                   06350021
+063600                 ABSTIME (WK-ABSTIME)                             06360021
+063700                 YYDDD   (WK-CURRENT-JULIAN-DATE)                 06370021
+063800                 RESP    (RSP-CODE)                               06380021
+063900           END-EXEC                                               06390021
+064000           IF  RSP-NORMAL                                         06400021
+064100                 CONTINUE                                         06410021
+064200           ELSE                                                   06420021
+064300                 PERFORM Z9999-ABEND                              06430021
+064400           END-IF                                                 06440021
+064500     ELSE                                                         06450021
+064600           PERFORM Z9999-ABEND                                    06460021
+064700     END-IF.                                                      06470021
+064800                                                                  06480021
+064900/                                                                 06490021
+065000***************************************************************** 06500021
+065100*                                                               * 06510021
+065200*    BUILD DEFAULT INSTANCE                                     * 06520021
+065300*                                                               * 06530021
+065400*    - THE DEFAULT INSTANCE WILL BE USED IF AN ERROR            * 06540021
+065500*      IS ENCOUNTERED                                           * 06550021
+065600*                                                               * 06560021
+065700***************************************************************** 06570021
+065800                                                                  06580021
+065900 B5000-BUILD-DEFAULT-INSTANCE.                                    06590021
+066000                                                                  06600021
+066100     MOVE 9999                  TO WK-DEFAULT-LOCATION-ID.        06610021
+066200     MOVE 0                     TO WK-DEFAULT-DEVICE-ID.          06620021
+066300     MOVE WK-CURRENT-JULIAN-Y2  TO WK-DEFAULT-JULIAN-Y2.          06630021
+066400     MOVE WK-CURRENT-JULIAN-DAY TO WK-DEFAULT-JULIAN-DAY.         06640021
+066500     MOVE WK-ABSTIME-13TO16     TO WK-DEFAULT-SEQNBR.             06650021
+066600                                                                  06660021
+066700/                                                                 06670021
+066800***************************************************************** 06680021
+066900*                                                               * 06690021
+067000*    PROCESS                                                    * 06700021
+067100*                                                               * 06710021
+067200*    - SKIP PROCESSING IF ENTITY TYPE NAME NOT IMPORTED         * 06720021
+067300*                                                               * 06730021
+067400***************************************************************** 06740021
+067500                                                                  06750021
+067600 C0000-PROCESS.                                                   06760021
+067700                                                                  06770021
+067800     IF  IMPORT-LOCATION-SUPPLIED                                 06780021
+067900           PERFORM C1000-LOCATION-SPECIFIC-ID                     06790021
+068000     ELSE                                                         06800021
+068100           PERFORM C2000-NON-LOCATION-SPECIFIC-ID                 06810021
+068200     END-IF.                                                      06820021
+068300                                                                  06830021
+068400/                                                                 06840021
+068500***************************************************************** 06850021
+068600*                                                               * 06860021
+068700*    LOCATION SPECIFIC ID                                       * 06870021
+068800*                                                               * 06880021
+068900***************************************************************** 06890021
+069000                                                                  06900021
+069100 C1000-LOCATION-SPECIFIC-ID.                                      06910021
+069200                                                                  06920021
+069300                                                                  06930021
+069400*****************************************************             06940021
+069500*                                                   *             06950021
+069600*    GAS - CHANGE TO CATER FOR 7 DIGIT SEQ NUMBERS  *             06960021
+069700*          CHANGED IF FROM <9999 TO < 999999. ALSO  *             06970021
+069800*          REMOVED LOOP AS IT IS NOT REQUIRED AS    *             06980021
+069900*          WE DO NOT WANT TO RE-WRITE THE VSAM FILE *             06990021
+070000*          AS THE HIGH ORDER DIGITS OF THE SEQ. NO  *             07000021
+070100*          ARE NOW RETURNED AS THE DEVICE ID (AFTER *             07010021
+070200*          BEING SUBTRACTED FROM 999 TO FORCE THE   *             07020021
+070300*          RANGE TO 900 TO 999 AS THESE DEVICE IDS  *             07030021
+070400*          ARE NEVER ASSIGNED IN THE FIELD AND SO   *             07040021
+070500*          CAN BE USED SAFELY ON CENTRAL.           *             07050021
+070600*                                                   *             07060021
+070700*****************************************************             07070021
+070800     PERFORM C1100-SET-FILEKEY.                                   07080021
+070900     PERFORM F1000-READ-INSTANCE-FILE.                            07090021
+071000     IF  RECORD-FOUND                                             07100021
+071100*****************************************************             07110021
+071200*                                                   *             07120021
+071300*    JDT - CHANGED IF WK-INSTFILE-JULIAN-DATE <     *             07130021
+071400*                     WK-CURRENT-JULIAN-DATE TO AN =*             07140021
+071500*          AND REVERSED THE CODE IN THE IF/ELSE.    *             07150021
+071600*          THIS AVOIDS A DATE ROLLOVER PROBLEM.     *             07160021
+071700*****************************************************             07170021
+071800         IF  WK-INSTFILE-JULIAN-DATE =                            07180021
+071900             WK-CURRENT-JULIAN-DATE                               07190021
+072000               IF  WK-INSTFILE-SEQNBR < 9999999                   07200021
+072100                     PERFORM E2000-INCREMENT-SEQNBR               07210021
+072200               END-IF                                             07220021
+072300         ELSE                                                     07230021
+072400               PERFORM E1000-NEW-JULIAN-DATE                      07240021
+072500         END-IF                                                   07250021
+072600     ELSE                                                         07260021
+072700         PERFORM E3000-NEW-DEVICE-RECORD                          07270021
+072800     END-IF.                                                      07280021
+072900*****************************************************             07290021
+073000*                                                   *             07300021
+073100*    GAS - END CHANGE                               *             07310021
+073200*                                                   *             07320021
+073300*****************************************************             07330021
+073400                                                                  07340021
+073500/                                                                 07350021
+073600***************************************************************** 07360021
+073700*                                                               * 07370021
+073800*    SET FILEKEY                                                * 07380021
+073900*                                                               * 07390021
+074000***************************************************************** 07400021
+074100                                                                  07410021
+074200 C1100-SET-FILEKEY.                                               07420021
+074300                                                                  07430021
+074400     MOVE HARDWARE-LOCATION-0002 TO WK-FILEKEY-LOCATION-ID.       07440021
+074500*****************************************************             07450021
+074600*                                                   *             07460021
+074700*    GAS - CHANGE TO CATER FOR 7 DIGIT SEQ NUMBERS  *             07470021
+074800*          HARDCODED DEVICE ID AND FILEKEY SUBN AS  *             07480021
+074900*          KEY REMAIN CONSTANT NOW TO AVOID THE     *             07490021
+075000*          RE-WRITING OF THE VSAM FILE.             *             07500021
+075100*                                                   *             07510021
+075200*****************************************************             07520021
+075300     MOVE 999                    TO WK-FILEKEY-DEVICE-ID.         07530021
+075400     MOVE 999                    TO WK-FILEKEY-SUB.               07540021
+075500*****************************************************             07550021
+075600*                                                   *             07560021
+075700*    GAS - END CHANGE                               *             07570021
+075800*                                                   *             07580021
+075900*****************************************************             07590021
+076000     MOVE ENTITY-TYPE-NAME-0001  TO WK-FILEKEY-ENTITY-NAME.       07600021
+076100                                                                  07610021
+076200/                                                                 07620021
+076300***************************************************************** 07630021
+076400*                                                               * 07640021
+076500*    NON-LOCATION-SPECIFIC-ID                                   * 07650021
+076600*                                                               * 07660021
+076700***************************************************************** 07670021
+076800                                                                  07680021
+076900 C2000-NON-LOCATION-SPECIFIC-ID.                                  07690021
+077000                                                                  07700021
+077100     MOVE 91                     TO WK-DFLT-START-LOC1            07710021
+077200     MOVE WK-CURRENT-JULIAN-Y1   TO WK-DFLT-START-LOC2            07720021
+077300     MOVE ZEROES                 TO WK-DFLT-START-LOC3            07730021
+077310     MOVE WK-DFLT-START-LOC      TO WK-DFLT-START-LOC-SUB         07731027
+077400     PERFORM VARYING WK-FILEKEY-SUB                               07740021
+077500********   FROM 9000 BY 1 UNTIL WK-FILEKEY-SUB > 9499             07750021
+077600      FROM WK-DFLT-START-LOC-SUB BY 1 UNTIL WK-FILEKEY-SUB > 9499 07760027
+077700           OR LOCATION-FILEKEY-BUILT                              07770021
+077800           OR READ-ERROR                                          07780021
+077900           OR WRITE-ERROR                                         07790021
+078000                                                                  07800021
+078100           PERFORM C2100-SET-FILEKEY                              07810021
+078200           PERFORM F1000-READ-INSTANCE-FILE                       07820021
+078300           IF  READ-ERROR                                         07830021
+078400               CONTINUE                                           07840021
+078500           ELSE                                                   07850021
+078600               IF  RECORD-FOUND                                   07860021
+078700*****************************************************             07870021
+078800*                                                   *             07880021
+078900*    JDT - CHANGED IF WK-INSTFILE-JULIAN-DATE <     *             07890021
+079000*                     WK-CURRENT-JULIAN-DATE TO AN =*             07900021
+079100*          AND REVERSED THE CODE IN THE IF/ELSE.    *             07910021
+079200*          THIS AVOIDS A DATE ROLLOVER PROBLEM.     *             07920021
+079300*****************************************************             07930021
+079400                   IF  WK-INSTFILE-JULIAN-DATE =                  07940021
+079500                       WK-CURRENT-JULIAN-DATE                     07950021
+079600*****************************************************             07960021
+079700*                                                   *             07970021
+079800*    GAS - CHANGE TO CATER FOR 7 DIGIT SEQ NUMBERS  *             07980021
+079900*          CHANGED IF FROM <9999 TO <9999999        *             07990021
+080000*                                                   *             08000021
+080100*****************************************************             08010021
+080200                         IF  WK-INSTFILE-SEQNBR < 9999999         08020021
+080300*****************************************************             08030021
+080400*                                                   *             08040021
+080500*    GAS - END CHANGE                               *             08050021
+080600*                                                   *             08060021
+080700*****************************************************             08070021
+080800                               PERFORM E2000-INCREMENT-SEQNBR     08080021
+080900                         ELSE                                     08090021
+081000                               PERFORM F3000-UNLOCK-INSTANCE-FILE 08100021
+081100                         END-IF                                   08110021
+081200                   ELSE                                           08120021
+081300                         PERFORM E1000-NEW-JULIAN-DATE            08130021
+081400                   END-IF                                         08140021
+081500               ELSE                                               08150021
+081600                   PERFORM E4000-NEW-LOCATION-RECORD              08160021
+081700               END-IF                                             08170021
+081800           END-IF                                                 08180021
+081900                                                                  08190021
+082000     END-PERFORM.                                                 08200021
+082100                                                                  08210021
+082200/                                                                 08220021
+082300***************************************************************** 08230021
+082400*                                                               * 08240021
+082500*    SET FILEKEY                                                * 08250021
+082600*                                                               * 08260021
+082700***************************************************************** 08270021
+082800                                                                  08280021
+082900 C2100-SET-FILEKEY.                                               08290021
+083000                                                                  08300021
+083100     MOVE WK-FILEKEY-SUB         TO WK-FILEKEY-LOCATION-ID.       08310021
+083200     MOVE ZEROS                  TO WK-FILEKEY-DEVICE-ID.         08320021
+083300     MOVE ENTITY-TYPE-NAME-0001  TO WK-FILEKEY-ENTITY-NAME.       08330021
+083400                                                                  08340021
+083500/                                                                 08350021
+083600***************************************************************** 08360021
+083700*                                                               * 08370021
+083800*    CAPTURE EXPORTS                                            * 08380021
+083900*                                                               * 08390021
+084000***************************************************************** 08400021
+084100                                                                  08410021
+084200 D0000-CAPTURE-EXPORTS.                                           08420021
+084300                                                                  08430021
+084400     PERFORM D1000-MOVE-IMPORT-TO-EXPORT.                         08440021
+084500     PERFORM D2000-ASSEMBLE-INSTANCE-ID.                          08450021
+084600     PERFORM D3000-SET-ERROR.                                     08460021
+084700                                                                  08470021
+084800/                                                                 08480021
+084900***************************************************************** 08490021
+085000*                                                               * 08500021
+085100*    MOVE IMPORT TO EXPORT                                      * 08510021
+085200*                                                               * 08520021
+085300***************************************************************** 08530021
+085400                                                                  08540021
+085500 D1000-MOVE-IMPORT-TO-EXPORT.                                     08550021
+085600                                                                  08560021
+085700     MOVE ENTITY-TYPE-NAME-0001  TO ENTITY-TYPE-NAME-0003.        08570021
+085800                                                                  08580021
+085900     MOVE HARDWARE-LOCATION-0002 TO HARDWARE-LOCATION-0004.       08590021
+086000     MOVE HARDWARE-DEVICE-0002   TO HARDWARE-DEVICE-0004.         08600021
+086100     MOVE DATE-CODE-0002         TO DATE-CODE-0004.               08610021
+086200     MOVE SEQUENCE-0002          TO SEQUENCE-0004.                08620021
+086300     MOVE TYPE-0002              TO TYPE-0004.                    08630021
+086400     MOVE ORDER-0002             TO ORDER-0004.                   08640021
+086500     MOVE FILE-NAME-0002         TO FILE-NAME-0004.               08650021
+086600     MOVE FILE-HANDLE-0002       TO FILE-HANDLE-0004.             08660021
+086700                                                                  08670021
+086800/                                                                 08680021
+086900***************************************************************** 08690021
+087000*                                                               * 08700021
+087100*    ASSEMBLE INSTANCE ID                                       * 08710021
+087200*                                                               * 08720021
+087300***************************************************************** 08730021
+087400                                                                  08740021
+087500 D2000-ASSEMBLE-INSTANCE-ID.                                      08750021
+087600                                                                  08760021
+087700     IF  LOCATION-FILEKEY-NOT-BUILT                               08770021
+087800     OR  READ-ERROR                                               08780021
+087900     OR  WRITE-ERROR                                              08790021
+088000           MOVE WK-DEFAULT-INSTANCE TO WK-ASSEMBLE-INSTANCE       08800021
+088100     ELSE                                                         08810021
+088200         MOVE WK-INSTFILE-LOCATION-ID TO WK-ASSEMBLE-LOCATION-ID  08820021
+088300         MOVE WK-INSTFILE-JULIAN-Y2   TO WK-ASSEMBLE-JULIAN-Y2    08830021
+088400         MOVE WK-INSTFILE-JULIAN-DAY  TO WK-ASSEMBLE-JULIAN-DAY   08840021
+088500         MOVE WK-INSTFILE-SEQNBR      TO WK-ASSEMBLE-SEQNBR       08850021
+088600*****************************************************             08860021
+088700*                                                   *             08870021
+088800*    GAS - CHANGE - SET DEVICE ID IN THE RETURNED   *             08880021
+088900*          INSTANCE ID TO THE 3 HIGH ORDER DIGITS   *             08890021
+089000*          OF THE SEQUENCE NUMBER. IN THE CASE OF   *             08900021
+089100*          LOCATION SPECIFIC IDS SUBTRACT THIS FROM *             08910021
+089200*          1000 TO FORCE THE ID TO RANGE 999 TO 900 *             08920021
+089300*                                                   *             08930021
+089400*****************************************************             08940021
+089500         COMPUTE WK-ASSEMBLE-DEVICE-ID =                          08950021
+089600                    WK-INSTFILE-SEQNBR / 10000                    08960021
+089700         IF  IMPORT-LOCATION-SUPPLIED                             08970021
+089800             COMPUTE WK-ASSEMBLE-DEVICE-ID =                      08980021
+089900                      999 - WK-ASSEMBLE-DEVICE-ID                 08990021
+090000         END-IF                                                   09000021
+090100****************************************************              09010021
+090200*                                                   *             09020021
+090300*    GAS - END CHANGE                               *             09030021
+090400*                                                   *             09040021
+090500*****************************************************             09050021
+090600         IF  REVERSE-SEQNBR                                       09060021
+090700              MOVE WK-ASSEMBLE-SEQNBR TO WK-RVSX-SEQNBR           09070021
+090800              MOVE 4 TO WK-RVSY-SUB                               09080021
+090900              PERFORM VARYING WK-RVSX-SUB                         09090021
+091000                 FROM 1 BY 1 UNTIL WK-RVSX-SUB > 4                09100021
+091100                                                                  09110021
+091200                 MOVE WK-RVSX-SEQNBR-CHAR(WK-RVSX-SUB)            09120021
+091300                 TO   WK-RVSY-SEQNBR-CHAR(WK-RVSY-SUB)            09130021
+091400                 COMPUTE WK-RVSY-SUB = WK-RVSY-SUB - 1            09140021
+091500              END-PERFORM                                         09150021
+091600              MOVE WK-RVSY-SEQNBR TO WK-ASSEMBLE-SEQNBR           09160021
+091700         END-IF                                                   09170021
+091800     END-IF.                                                      09180021
+091900                                                                  09190021
+092000     MOVE SPACES TO WK-STRING-INSTANCE.                           09200021
+092100                                                                  09210021
+092200     PERFORM VARYING WK-ORDER-SUB                                 09220021
+092300           FROM 1 BY 1 UNTIL WK-ORDER-SUB > 4                     09230021
+092400                                                                  09240021
+092500           IF  WK-ORDER-CHAR(WK-ORDER-SUB) = '1'                  09250021
+092600                 STRING WK-STRING-INSTANCE                        09260021
+092700                        DELIMITED BY SPACE                        09270021
+092800                        WK-ASSEMBLE-LOCATION-ID                   09280021
+092900                        DELIMITED BY SIZE                         09290021
+093000                        INTO WK-STRING-INSTANCE                   09300021
+093100           END-IF                                                 09310021
+093200           IF  WK-ORDER-CHAR(WK-ORDER-SUB) = '2'                  09320021
+093300                 STRING WK-STRING-INSTANCE                        09330021
+093400                        DELIMITED BY SPACE                        09340021
+093500                        WK-ASSEMBLE-DEVICE-ID                     09350021
+093600                        DELIMITED BY SIZE                         09360021
+093700                        INTO WK-STRING-INSTANCE                   09370021
+093800           END-IF                                                 09380021
+093900           IF  WK-ORDER-CHAR(WK-ORDER-SUB) = '3'                  09390021
+094000                 STRING WK-STRING-INSTANCE                        09400021
+094100                        DELIMITED BY SPACE                        09410021
+094200                        WK-ASSEMBLE-JULIAN-Y2                     09420021
+094300                        DELIMITED BY SIZE                         09430021
+094400                        INTO WK-STRING-INSTANCE                   09440021
+094500                 STRING WK-STRING-INSTANCE                        09450021
+094600                        DELIMITED BY SPACE                        09460021
+094700                        WK-ASSEMBLE-JULIAN-DAY                    09470021
+094800                        DELIMITED BY SIZE                         09480021
+094900                        INTO WK-STRING-INSTANCE                   09490021
+095000           END-IF                                                 09500021
+095100           IF  WK-ORDER-CHAR(WK-ORDER-SUB) = '4'                  09510021
+095200                 STRING WK-STRING-INSTANCE                        09520021
+095300                        DELIMITED BY SPACE                        09530021
+095400                        WK-ASSEMBLE-SEQNBR                        09540021
+095500                        DELIMITED BY SIZE                         09550021
+095600                        INTO WK-STRING-INSTANCE                   09560021
+095700           END-IF                                                 09570021
+095800                                                                  09580021
+095900     END-PERFORM.                                                 09590021
+096000     MOVE WK-STRING-INSTANCE TO INSTANCE-ID-0003.                 09600021
+096100                                                                  09610021
+096200/                                                                 09620021
+096300***************************************************************** 09630021
+096400*                                                               * 09640021
+096500*    SET ERROR                                                  * 09650021
+096600*                                                               * 09660021
+096700*    - ERROR TABLE                                              * 09670021
+096800*                                                               * 09680021
+096900*      LOCATION FILEKEY EXCEEDED / DEFAULT ID USED ... -101     * 09690021
+097000*      READ ERROR  / DEFAULE ID USED ................. -101     * 09700021
+097100*      WRITE ERROR / DEFAULT ID USED ................. -102     * 09710021
+097200*      LOCATION SPECIFIC:                                       * 09720021
+097300*        SUCCESS / SEQNBR INCREMENTED ................  103     * 09730021
+097400*        SUCCESS / NEW DEVICE ADDED / SEQNBR 1 .......  105     * 09740021
+097500*        SUCCESS / NEW JULIAN DATE  / SEQNBR 1 .......  106     * 09750021
+097600*        SUCCESS / NEW ENTITY TYPE  / SEQNBR 1 .......  108     * 09760021
+097700*      NON-LOCATION SPECIFIC:                                   * 09770021
+097800*        SUCCESS / SEQNBR INCREMENTED ................  101     * 09780021
+097900*        SUCCESS / NEW JULIAN DATE  / SEQNBR 1 .......  104     * 09790021
+098000*        SUCCESS / NEW ENTITY TYPE  / SEQNBR 1 .......  107     * 09800021
+098100*                                                               * 09810021
+098200***************************************************************** 09820021
+098300                                                                  09830021
+098400 D3000-SET-ERROR.                                                 09840021
+098500                                                                  09850021
+098600     IF  LOCATION-FILEKEY-NOT-BUILT                               09860021
+098700     OR  READ-ERROR                                               09870021
+098800         MOVE -101 TO ERROR-0004                                  09880021
+098900     ELSE                                                         09890021
+099000         IF  WRITE-ERROR                                          09900021
+099100             MOVE -102 TO ERROR-0004                              09910021
+099200         ELSE                                                     09920021
+099300             IF  IMPORT-LOCATION-SUPPLIED                         09930021
+099400                 IF  NEW-ENTITY-ADDED                             09940021
+099500                     MOVE 108 TO ERROR-0004                       09950021
+099600                 ELSE                                             09960021
+099700                     IF NEW-DEVICE-ADDED                          09970021
+099800                        MOVE 105 TO ERROR-0004                    09980021
+099900                     ELSE                                         09990021
+100000                        IF  NEW-JULIAN-DATE-ADDED                 10000021
+100100                            MOVE 106 TO ERROR-0004                10010021
+100200                        ELSE                                      10020021
+100300                            MOVE 103 TO ERROR-0004                10030021
+100400                        END-IF                                    10040021
+100500                     END-IF                                       10050021
+100600                 END-IF                                           10060021
+100700             ELSE                                                 10070021
+100800                 IF  NEW-ENTITY-ADDED                             10080021
+100900                     MOVE 107 TO ERROR-0004                       10090021
+101000                 ELSE                                             10100021
+101100                     IF  NEW-JULIAN-DATE-ADDED                    10110021
+101200                         MOVE 104 TO ERROR-0004                   10120021
+101300                     ELSE                                         10130021
+101400                         MOVE 101 TO ERROR-0004                   10140021
+101500                     END-IF                                       10150021
+101600                 END-IF                                           10160021
+101700             END-IF                                               10170021
+101800         END-IF                                                   10180021
+101900     END-IF.                                                      10190021
+102000                                                                  10200021
+102100/                                                                 10210021
+102200***************************************************************** 10220021
+102300*                                                               * 10230021
+102400*    NEW JULIAN DATE                                            * 10240021
+102500*                                                               * 10250021
+102600***************************************************************** 10260021
+102700                                                                  10270021
+102800 E1000-NEW-JULIAN-DATE.                                           10280021
+102900                                                                  10290021
+103000     MOVE WK-CURRENT-JULIAN-DATE TO WK-INSTFILE-JULIAN-DATE.      10300021
+103100     MOVE 1                      TO WK-INSTFILE-SEQNBR.           10310021
+103200     SET  NEW-JULIAN-DATE-ADDED  TO TRUE.                         10320021
+103300     SET  LOCATION-FILEKEY-BUILT TO TRUE.                         10330021
+103400                                                                  10340021
+103500     PERFORM F2000-REWRITE-INSTANCE-FILE.                         10350021
+103600                                                                  10360021
+103700/                                                                 10370021
+103800***************************************************************** 10380021
+103900*                                                               * 10390021
+104000*    INCREMENT SEQUENCE NUMBER                                  * 10400021
+104100*                                                               * 10410021
+104200***************************************************************** 10420021
+104300                                                                  10430021
+104400 E2000-INCREMENT-SEQNBR.                                          10440021
+104500                                                                  10450021
+104600     COMPUTE WK-INSTFILE-SEQNBR = WK-INSTFILE-SEQNBR + 1.         10460021
+104700     SET     LOCATION-FILEKEY-BUILT TO TRUE.                      10470021
+104800                                                                  10480021
+104900     PERFORM F2000-REWRITE-INSTANCE-FILE.                         10490021
+105000                                                                  10500021
+105100/                                                                 10510021
+105200***************************************************************** 10520021
+105300*                                                               * 10530021
+105400*    NEW DEVICE RECORD                                          * 10540021
+105500*                                                               * 10550021
+105600***************************************************************** 10560021
+105700                                                                  10570021
+105800 E3000-NEW-DEVICE-RECORD.                                         10580021
+105900                                                                  10590021
+106000     MOVE HARDWARE-LOCATION-0002  TO WK-INSTFILE-LOCATION-ID.     10600021
+106100     MOVE ENTITY-TYPE-NAME-0001   TO WK-INSTFILE-ENTITY-NAME.     10610021
+106200     MOVE WK-FILEKEY-SUB          TO WK-INSTFILE-DEVICE-ID.       10620021
+106300     MOVE WK-CURRENT-JULIAN-DATE  TO WK-INSTFILE-JULIAN-DATE.     10630021
+106400     MOVE 1                       TO WK-INSTFILE-SEQNBR.          10640021
+106500     IF  WK-FILEKEY-SUB = 0                                       10650021
+106600           SET NEW-ENTITY-ADDED   TO TRUE                         10660021
+106700     ELSE                                                         10670021
+106800           SET NEW-DEVICE-ADDED   TO TRUE                         10680021
+106900     END-IF.                                                      10690021
+107000     SET  LOCATION-FILEKEY-BUILT  TO TRUE.                        10700021
+107100                                                                  10710021
+107200     PERFORM F4000-WRITE-INSTANCE-FILE.                           10720021
+107300                                                                  10730021
+107400/                                                                 10740021
+107500***************************************************************** 10750021
+107600*                                                               * 10760021
+107700*    NEW LOCATION RECORD                                        * 10770021
+107800*                                                               * 10780021
+107900***************************************************************** 10790021
+108000                                                                  10800021
+108100 E4000-NEW-LOCATION-RECORD.                                       10810021
+108200                                                                  10820021
+108300     MOVE WK-FILEKEY-SUB          TO WK-INSTFILE-LOCATION-ID.     10830021
+108400     MOVE ENTITY-TYPE-NAME-0001   TO WK-INSTFILE-ENTITY-NAME.     10840021
+108500     MOVE 0                       TO WK-INSTFILE-DEVICE-ID.       10850021
+108600     MOVE WK-CURRENT-JULIAN-DATE  TO WK-INSTFILE-JULIAN-DATE.     10860021
+108700     MOVE 1                       TO WK-INSTFILE-SEQNBR.          10870021
+108800**** IF  WK-FILEKEY-SUB = 9000                                    10880021
+108900     IF  WK-FILEKEY-SUB = WK-DFLT-START-LOC                       10890021
+109000           SET NEW-ENTITY-ADDED   TO TRUE                         10900021
+109100     ELSE                                                         10910021
+109200           SET NEW-LOCATION-ADDED TO TRUE                         10920021
+109300     END-IF.                                                      10930021
+109400     SET  LOCATION-FILEKEY-BUILT  TO TRUE.                        10940021
+109500                                                                  10950021
+109600     PERFORM F4000-WRITE-INSTANCE-FILE.                           10960021
+109700                                                                  10970021
+109800/                                                                 10980021
+109900***************************************************************** 10990021
+110000*                                                               * 11000021
+110100*    READ INSTANCE FILE                                         * 11010021
+110200*                                                               * 11020021
+110300***************************************************************** 11030021
+110400                                                                  11040021
+110500 F1000-READ-INSTANCE-FILE.                                        11050021
+110600                                                                  11060021
+110700     MOVE LOW-VALUES TO WK-INSTFILE-RECORD.                       11070021
+110800     EXEC CICS                                                    11080021
+110900           READ FILE ('INSTFILE')                                 11090021
+111000           INTO      (WK-INSTFILE-RECORD)                         11100021
+111100           RIDFLD    (WK-FILEKEY)                                 11110021
+111200           UPDATE                                                 11120021
+111300           RESP      (RSP-CODE)                                   11130021
+111400     END-EXEC.                                                    11140021
+111500     IF  RSP-NORMAL                                               11150021
+111600           SET RECORD-FOUND TO TRUE                               11160021
+111700           IF WK-INSTFILE-SEQNBR-X IS NOT NUMERIC                 11170021
+111800              MOVE WK-INSTFILE-SEQNBR-X TO                        11180021
+111900                   WK-INSTFILE-OLD-SEQNBR                         11190021
+112000              MOVE WK-INSTFILE-OLD-SEQNBR-N                       11200021
+112100                   TO WK-INSTFILE-SEQNBR                          11210021
+112200           END-IF                                                 11220021
+112300     ELSE                                                         11230021
+112400         IF RSP-NOTFND                                            11240021
+112500               SET RECORD-NOT-FOUND TO TRUE                       11250021
+112600         ELSE                                                     11260021
+112700               SET RECORD-NOT-FOUND TO TRUE                       11270021
+112800               SET READ-ERROR TO TRUE                             11280021
+112900         END-IF                                                   11290021
+113000     END-IF.                                                      11300021
+113100                                                                  11310021
+113200/                                                                 11320021
+113300***************************************************************** 11330021
+113400*                                                               * 11340021
+113500*    REWRITE INSTANCE FILE                                      * 11350021
+113600*                                                               * 11360021
+113700***************************************************************** 11370021
+113800                                                                  11380021
+113900 F2000-REWRITE-INSTANCE-FILE.                                     11390021
+114000                                                                  11400021
+114100     EXEC CICS                                                    11410021
+114200           REWRITE                                                11420021
+114300           DATASET ('INSTFILE')                                   11430021
+114400           FROM    (WK-INSTFILE-RECORD)                           11440021
+114500           RESP    (RSP-CODE)                                     11450021
+114600     END-EXEC.                                                    11460021
+114700     IF  RSP-NORMAL                                               11470021
+114800           CONTINUE                                               11480021
+114900     ELSE                                                         11490021
+115000           SET WRITE-ERROR TO TRUE                                11500021
+115100     END-IF.                                                      11510021
+115200                                                                  11520021
+115300/                                                                 11530021
+115400***************************************************************** 11540021
+115500*                                                               * 11550021
+115600*    UNLOCK INSTANCE FILE                                       * 11560021
+115700*                                                               * 11570021
+115800***************************************************************** 11580021
+115900                                                                  11590021
+116000 F3000-UNLOCK-INSTANCE-FILE.                                      11600021
+116100                                                                  11610021
+116200     EXEC CICS                                                    11620021
+116300           UNLOCK                                                 11630021
+116400           DATASET ('INSTFILE')                                   11640021
+116500           RESP    (RSP-CODE)                                     11650021
+116600     END-EXEC.                                                    11660021
+116700                                                                  11670021
+116800/                                                                 11680021
+116900***************************************************************** 11690021
+117000*                                                               * 11700021
+117100*    WRITE INSTANCE FILE                                        * 11710021
+117200*                                                               * 11720021
+117300***************************************************************** 11730021
+117400                                                                  11740021
+117500 F4000-WRITE-INSTANCE-FILE.                                       11750021
+117600                                                                  11760021
+117700     EXEC CICS                                                    11770021
+117800           WRITE                                                  11780021
+117900           FROM    (WK-INSTFILE-RECORD)                           11790021
+118000           LENGTH  (LENGTH OF WK-INSTFILE-RECORD)                 11800021
+118100           DATASET ('INSTFILE')                                   11810021
+118200           RIDFLD  (WK-FILEKEY)                                   11820021
+118300           RESP    (RSP-CODE)                                     11830021
+118400     END-EXEC.                                                    11840021
+118500     IF  RSP-NORMAL                                               11850021
+118600           CONTINUE                                               11860021
+118700     ELSE                                                         11870021
+118800           SET WRITE-ERROR TO TRUE                                11880021
+118900     END-IF.                                                      11890021
+119000                                                                  11900021
+119100/                                                                 11910021
+119200***************************************************************** 11920021
+119300*                                                               * 11930021
+119400*    ABEND TRANSACTION                                          * 11940021
+119500*                                                               * 11950021
+119600***************************************************************** 11960021
+119700                                                                  11970021
+119800 Z9999-ABEND.                                                     11980021
+119900                                                                  11990021
+120000     EXEC CICS ABEND                                              12000021
+120100           ABCODE (WK-ABEND-CODE)                                 12010021
+120200     END-EXEC.                                                    12020021

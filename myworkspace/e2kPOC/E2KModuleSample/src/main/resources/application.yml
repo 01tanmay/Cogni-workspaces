@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: E2KModuleSample
+server:
+  port: 9090
+
+  
+# Mock Data
+instance-id:
+  hardware-location: PDX
+  hardware-device: 001
+  date-code: 1119
+  sequence: 001
+  type: SHIPMENT
+  order: ASC
+  file-name: shipment
+  file-handle: 820000004
