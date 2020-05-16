@@ -1,0 +1,16 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.navbar-collapse {
+    background-color:#282829 ;
+    text-decoration-color: aliceblue;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    color: white;
+}
+.navbar-expand-lg .navbar-nav .nav-link{
+    padding-right: 3.5rem;
+    padding-left: .5rem;
+    padding-bottom: 12px;
+    padding-top: 14px;   
+}

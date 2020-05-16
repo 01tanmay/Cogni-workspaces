@@ -1,0 +1,106 @@
+<app-header></app-header>
+
+<div class="main-container">
+
+    <div style="text-align:center">
+      <h2>Customer Maintainance</h2>
+    </div>
+    <div class="container">
+      <div>
+        <form *ngIf=!this.request>
+          <div class="row">
+            <label class="col" for="accountNumber">Account Number :</label>
+            <input type="text" class="col form-control" id="accountNumber" placeholder="Account Number"  maxlength="9" [(ngModel)]="accountNumber" >
+          </div>
+          <div><i>(or)</i></div>
+          <div class="row">
+            <label class="col" for="firstName">Name :</label>
+            <input type="text" class="col form-control" id="firstName" placeholder="Name" name="firstName" [(ngModel)]="firstName">
+          </div>
+          <div class="row">
+            <label class="col" for="creditedOffice">Credited Office :</label>
+            <input type="text" class="col form-control" id="creditedOffice" placeholder="Credited Office" name="creditedOffice" [(ngModel)]="creditedOffice">
+          </div>
+          <div style="text-align: center;">
+            <button type="submit" class="button"(click)="getServices();">Search</button>&nbsp;&nbsp;
+            <p><a href="" target="_blank">New Customer Account?</a></p>
+          </div>
+          <div *ngIf="errorMessage" class="demo">{{message}}</div>
+        </form>
+    </div>
+
+      <div *ngIf="show">
+
+        <h3>Search Results</h3>
+        
+        <table>
+          <tr>
+          <th>Customer Name</th>
+          <th>Account Number</th>                             
+          </tr>
+          <tbody>
+          <tr *ngFor="let customer of filteredCustomers | filter: searchByKeyword: 'name'">
+          <td>{{ customer.firstName}}</td>
+          <td>{{ user.lastName}}</td>          
+          </tr>
+          </tbody>
+          </table>
+        
+        <div>
+          <button type="submit" class="back-button" (click)="goback();">Back</button>
+        </div>
+        <!--
+          class="table table-responsive"
+        <form [formGroup]="form">
+            <div>
+              <button type="submit" class="back-button" (click)="goback();">Back</button>
+            </div>
+            <div class="row ">
+            <div class="col">
+              <label for="accountNumber">Account Number :</label>
+              <input formControlName="accountNumber" type="text" class="form-control" id="accountNumber"  name="accountNumber"  [(ngModel)]="accountNumber">
+            </div>
+            <div class="col">
+              <label for="creditedOffice">Credited Office :</label>
+              <input formControlName="creditedOffice" type="text" class="form-control" id="creditedOffice"  name="creditedOffice"  [(ngModel)]="creditedOffice">
+            </div>
+          </div>
+            <label for="firstName">Name :</label>
+            <input formControlName="firstName" type="text" class="form-control" id="firstName"  name="firstName"  [(ngModel)]="firstName">
+          <div >
+            <label for="primaryAddress">Primary Address :</label>
+            <input formControlName="primaryAddress" type="text" class="form-control" id="primaryAddress"  name="primaryAddress"  [(ngModel)]="primaryAddress">
+          </div>
+          <div class="row">
+          <div class="col" >
+            <label for="city">City :</label>
+            <input formControlName="city" type="text" class="form-control" id="city"  name="city"  [(ngModel)]="city">
+          </div>
+          <div class="col-md-3">
+            <label for="state">State :</label>
+            <select formControlName="state" type="text" class="form-control" id="state"  name="state"  [(ngModel)]="state">
+              <option selected>Choose...</option>
+              <option>Georgia</option>
+              <option>Ohio</option>
+              <option>Florida</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="cntry">Country :</label>
+            <select formControlName="cntry" type="text" class="form-control" id="cntry"  name="cntry"  [(ngModel)]="cntry">
+              <option selected>United States of America</option>
+            </select>
+          </div>
+        </div>
+          <div class="col-md-3">
+            <label for="zipcode">Zipcode :</label>
+            <input formControlName="zipcode" type="text" class="form-control" id="zipcode"  name="zipcode"  [(ngModel)]="zipcode">
+          </div>
+        </form>
+      </div>
+
+ -->
+
+</div>
+</div>
+

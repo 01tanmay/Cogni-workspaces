@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.demo{
+    color:red;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width:36%;
+    margin: 0 auto;
+  }
+  
+  .main-container {
+    background-image: url("./assets/images/backlogo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    background-attachment: fixed;
+  }
+  
+  .button {
+    background-color: #282829; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-top:20px;
+  }
+  
+  a{
+    color: black;
+  }
+

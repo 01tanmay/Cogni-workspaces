@@ -1,0 +1,804 @@
+<!-- <app-header></app-header>
+
+<div class="main-container">
+
+    <form [formGroup]="tgeminidetails" novalidate (ngSubmit)="onSubmit(tgeminidetails.value)">
+        
+      <div class="row">
+  
+        <div class="col, border-right">
+            
+            <p class="server-action-menu">
+                Shipment Details
+            </p>
+
+            <div class="form-group">
+                <label for="name">Shipment Number</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Consumer Code</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Service Level &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Payment Term &nbsp;&nbsp;</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Inco Term Code </label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Package Type &nbsp;&nbsp;</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Container Type &nbsp;</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Carrier Code &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Mode of Transport</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Eww Commodity</label>
+                <input type="text" />
+            </div>
+
+        </div>
+
+        <div class="col">
+
+            <div class="acntDet">
+            <p class="server-action-menu">
+            Account Details</p>
+
+            <div class="form-group">
+                <label for="name">Cts Amount</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Cts Currency</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Declared value</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Dclrd Value currency</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Insured Value</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Insured Value CC</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Customs Value</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Customs Value CC</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Override Dim Fctr Ind</label>
+                <input type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Override Dim Fctr</label>
+                <input type="text" />
+            </div>   
+        </div>
+        </div>
+
+        <div class="col">
+            <p class="server-action-menu">
+            Shipment Pieces</p>
+
+            <div class="form-group">
+                <label for="name">Width</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Height</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Weight</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Length</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Cmdy1</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Cmdy2</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Quantity</label>
+                <input type="text" />
+            </div>  
+
+            <br>
+            <br>
+            <br>
+            &nbsp;&nbsp;&nbsp;
+            <button class="submit-btn" color="primary" mat-raised-button type="submit" > Add Pieces</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="submit-btn" color="primary" mat-raised-button type="submit" >Clear Pieces</button>
+
+        </div>
+
+        <div class="col">
+       
+            <p class="server-action-menu">
+            Shipment Parties</p>
+       
+            <div class="form-group">
+                <label for="name">Account number</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">City</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">State</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Postal Code</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Role Code 1</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Role Code 2</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Shell PA</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Quantity</label>
+                <input type="text" />
+            </div>  
+
+            <br>
+            &nbsp;&nbsp;&nbsp;
+            <button class="submit-btn" color="primary" mat-raised-button type="submit" > Add Values</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="submit-btn" color="primary" mat-raised-button type="submit" >Clear Values</button>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+  
+        <div class="col">
+
+            <p class="server-action-menu">
+            Shipment Rating Info</p>
+            
+            <div class="form-group">
+                <label for="name">Weight UOM</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Dimension UOM</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Volume DOM</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Distance UOM</label>
+                <input type="text" />
+            </div>  
+
+            <div class="form-group">
+                <label for="name">Rate type Ovrd</label>
+                <input type="text" />
+            </div>  
+
+        <div class="row">
+
+            <div class="col">
+
+                <p class="server-action-menu">
+                    Date & Time Info</p>
+
+                <div class="form-group">
+                    <label for="name">Creation Date</label>
+                    <input type="text" />
+                </div>  
+
+                <div class="form-group">
+                    <label for="name">Delivery Date</label>
+                    <input type="text" />
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Received At Date</label>
+                    <input type="text" />
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Received At Time</label>
+                    <input type="text" />
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Delivery Time</label>
+                    <input type="text" />
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <div class="col">
+        <p class="server-action-menu">
+        Location Details</p>
+
+        <div class="form-group">
+            <label for="name">Delivery City</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Delivery State Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Delivery Country Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Delivery Postal Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Pickup City</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Pickup State Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Pickup Country Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Pickup Postal Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Origin Tariff Point</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Dest. Tariff Point</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Imp Gateway SCC</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Exp Gateway SCC</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Received At Loc</label>
+            <input type="text" />
+        </div>
+
+    </div>
+
+    <div class="col">
+        <p class="server-action-menu">
+        Shipment Charges</p>
+
+        <div class="form-group">
+            <label for="name">Chg Code</label>
+            <input type="text" />
+        </div>
+      
+        <div class="form-group">
+            <label for="name">Account Number</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">User Sel Ind</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Role Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Ovrd Ind</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Ovrd Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Amount</label>
+            <input type="text" />
+        </div>
+
+        <br>
+        &nbsp;&nbsp;&nbsp;
+        <button class="submit-btn" color="primary" mat-raised-button type="submit" > Add Charges</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="submit-btn" color="primary" mat-raised-button type="submit" >Clear Charges</button>
+        
+    </div>
+
+    <div class="col">
+
+        <p class="server-action-menu">
+        Parameter Values</p>
+        
+        <div class="form-group">
+            <label for="name">Parm Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Parm Time</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Parm Dom</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Curr Code</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Parm Num</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Parm Date</label>
+            <input type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Parm Text</label>
+            <input type="text" />
+        </div>
+
+        <br>
+        &nbsp;&nbsp;&nbsp;
+        <button class="submit-btn" color="primary" mat-raised-button type="submit" > Add Values</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="submit-btn" color="primary" mat-raised-button type="submit" >Clear Values</button>
+
+
+        <div class="row">
+
+            <div class="col">
+                <br>
+                <br>
+                <button class="btn-lg" color="primary" mat-raised-button type="submit" >
+                    Submit
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+
+    </form>
+    
+</div> -->
+<app-header></app-header>
+<div class="main-container">
+     <div class="tgemini-container accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+          <div class="col-md-12">
+               <div class="row">
+                    <div class="col-md-3">
+                         <div id="headingOne" class="card-header">
+                              <button class="btn btn-link" type="button" data-toggle="collapse"
+                                   data-target="#shipmentDetails" aria-expanded="false" aria-controls="shipmentDetails">
+                                   Shipment Details
+                              </button>
+                         </div>
+                         <div id="shipmentDetails" class="box collapse show" role="tabpanel"
+                              aria-labelledby="headingOne" data-parent="#accordionEx">
+                              <div class="card-body borderClass">
+                                   <div class="row">
+                                        <div class="col-md-12">
+                                             <div class="row">
+                                                  <label class="col-md-6" for="shpmtNumber">Shipment Number:</label>
+                                                  <input type="text" class=" col-md-6 form-control" id="shpmtNumber">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="consumercode">Consumer Code:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="consumercode">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="servicelevel">Service Level:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="servicelevel">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="paymentterm">Payment Term:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="paymentterm">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="incotermcode">Inco Terms Code:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="incotermcode">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="packagetype">Package Type:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="packagetype">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="containertype">Container Type:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="containertype">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="carriercode">Carrier Code:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="carriercode">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="modeoftransport">Mode Of
+                                                       Transport:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="modeoftransport">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="ewwcommodity">Eww Commodity:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="ewwcommodity">
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-3">
+                         <div id="headingFive" class="card-header">
+                              <button class="btn btn-link" type="button" data-toggle="collapse"
+                                   data-target="#AccountInformation" aria-expanded="true"
+                                   aria-controls="AccountInformation">
+                                   Account Information
+                              </button>
+                         </div>
+                         <div id="collapseOne" class="box collapse show" aria-labelledby="headingFive"
+                              data-parent="#accordionExample">
+                              <div class="card-body borderClass">
+                                   <div class="row">
+                                        <div class="col-md-12">
+                                             <div class="row">
+                                                  <label class="col-md-6" for="ctsAmount">Cts Amount:</label>
+                                                  <input type="text" class=" col-md-6 form-control" id="ctsAmount">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="ctsCurrency">Cts Currency:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="ctsCurrency">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="declaredValue">Declared Value:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="declaredValue">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="dclrValueCurrency">Dclr Value
+                                                       Currency:</label>
+                                                  <input type="text" class="col-md-6 form-control"
+                                                       id="dclrValueCurrency">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="insuredValue">Insured Value:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="insuredValue">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="customsValue">Customs Value:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="customsValue">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="customsValueCC">Customs Value CC:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="customsValueCC">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="fctrInd">Overrise Dim Fctr Ind:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="fctrInd">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="fctr">Overrise Dim Fctr:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="fctr">
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="col-md-3">
+                         <div id="headingthree" class="card-header">
+                              <button class="btn btn-link" type="button" data-toggle="collapse"
+                                   data-target="#shipmentPieces" aria-expanded="true" aria-controls="shipmentPieces">
+                                   Shipment Pieces
+                              </button>
+                         </div>
+                         <div id="collapseOne" class="box collapse show" aria-labelledby="headingthree"
+                              data-parent="#accordionExample">
+                              <div class="card-body borderClass">
+                                   <div class="row">
+                                        <div class="col-md-12">
+                                             <div class="row">
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="width">Width:</label>
+                                                            <input type="text" class=" col-md-6 form-control"
+                                                                 id="width">
+                                                       </div>
+                                                  </div>
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="cmdy1">Cmdy1:</label>
+                                                            <input type="text" class="col-md-6 form-control" id="cmdy1">
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                             <div class="row">
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="height">Height:</label>
+                                                            <input type="text" class="col-md-6 form-control"
+                                                                 id="height">
+                                                       </div>
+                                                  </div>
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="cmdy2">Cmdy2:</label>
+                                                            <input type="text" class="col-md-6 form-control" id="cmdy2">
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                             <div class="row">
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="weight">Weight:</label>
+                                                            <input type="text" class="col-md-6 form-control"
+                                                                 id="weight">
+                                                       </div>
+                                                  </div>
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="quantity">Quantity:</label>
+                                                            <input type="text" class="col-md-6 form-control"
+                                                                 id="quantity">
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-3" for="length">Length:</label>
+                                                  <input type="text" class="col-md-3 form-control" id="length">
+                                             </div>
+                                             <div class="row">
+                                                  <button class="button" mat-raised-button type="submit"> Add
+                                                       Pieces</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                  <button class="button" mat-raised-button type="submit">Clear
+                                                       Pieces</button>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="col-md-3">
+                         <div id="headingFour" class="card-header">
+                              <button class="btn btn-link" type="button" data-toggle="collapse"
+                                   data-target="#shipmentParties" aria-expanded="true" aria-controls="shipmentParties">
+                                   Shipment Parties
+                              </button>
+                         </div>
+                         <div id="collapseOne" class="box collapse show" aria-labelledby="headingFour"
+                              data-parent="#accordionExample">
+                              <div class="card-body borderClass">
+                                   <div class="row">
+                                        <div class="col-md-12">
+                                             <div class="row">
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="accountNumber">Account
+                                                                 number:</label>
+                                                            <input type="text" class=" col-md-6 form-control"
+                                                                 id="accountNumber">
+                                                       </div>
+                                                  </div>
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="postalCode">Postal
+                                                                 Code:</label>
+                                                            <input type="text" class="col-md-6 form-control"
+                                                                 id="postalCode">
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                             <div class="row">
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="city">City:</label>
+                                                            <input type="text" class="col-md-6 form-control" id="city">
+                                                       </div>
+                                                  </div>
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="roleCode1">Role Code 1:</label>
+                                                            <input type="text" class="col-md-6 form-control"
+                                                                 id="roleCode1">
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                             <div class="row">
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="state">State:</label>
+                                                            <input type="text" class="col-md-6 form-control" id="state">
+                                                       </div>
+                                                  </div>
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="roleCode2">Role Code 2:</label>
+                                                            <input type="text" class="col-md-6 form-control"
+                                                                 id="roleCode2">
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                             <div class="row">
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="country">Country:</label>
+                                                            <input type="text" class="col-md-6 form-control"
+                                                                 id="country">
+                                                       </div>
+                                                  </div>
+                                                  <div class="col">
+                                                       <div class="row">
+                                                            <label class="col-md-6" for="shellPA">Shell PA:</label>
+                                                            <input type="text" class="col-md-6 form-control"
+                                                                 id="shellPA">
+                                                       </div>
+                                                  </div>
+                                             </div>
+                                             <div class="row">
+                                                  <button class="button" mat-raised-button type="submit"> Add
+                                                       Pieces</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                  <button class="button" mat-raised-button type="submit">Clear
+                                                       Pieces</button>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="col-md-3">
+                         <div id="headingtwo" class="card-header">
+                              <button class="btn btn-link" type="button" data-toggle="collapse"
+                                   data-target="#shpmtDetails" aria-expanded="true" aria-controls="shpmtDetails">
+                                   Shp Rating Info
+                              </button>
+                         </div>
+                         <div id="collapseOne" class="box collapse show" aria-labelledby="headingtwo"
+                              data-parent="#accordionExample">
+                              <div class="card-body borderClass">
+                                   <div class="row">
+                                        <div class="col-md-12">
+                                             <div class="row">
+                                                  <label class="col-md-6" for="weightuom">Weight UOM:</label>
+                                                  <input type="text" class=" col-md-6 form-control" id="weightuom">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="dimensionuom">Dimension UOM:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="dimensionuom">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="volumeuom">Volume UOM:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="volumeuom">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="distanceuom">Distance UOM:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="distanceuom">
+                                             </div>
+                                             <div class="row">
+                                                  <label class="col-md-6" for="ratetypovrd">Rate Typ Ovrd:</label>
+                                                  <input type="text" class="col-md-6 form-control" id="ratetypovrd">
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div>
+                    <button type="submit" class="button" name="Execute" id="Execute"
+                         (click)="getDetails();">Execute</button>
+               </div>
+          </div>
+     </div>
+</div>
